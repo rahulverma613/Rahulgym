@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rahul Verma | Iron Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --black2: #0e0e0e;
+  --black3: #141414;
+  --black4: #1a1a1a;
+  --red: #e8180c;
+  --red2: #c01008;
+  --red3: #ff3d2e;
+  --redfade: rgba(232,24,12,0.08);
+  --redborder: rgba(232,24,12,0.25);
+  --white: #f5f0eb;
+  --grey: #888;
+  --grey2: #555;
+  --grey3: #2a2a2a;
+  --glow: 0 0 30px rgba(232,24,12,0.4);
+  --glow-sm: 0 0 12px rgba(232,24,12,0.3);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* NOISE TEXTURE OVERLAY */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:0; opacity:0.6;
+}
+
+/* CURSOR */
+.cur { width:10px; height:10px; background:var(--red); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.08s; box-shadow:var(--glow-sm); }
+.cur-trail { width:36px; height:36px; border:1px solid rgba(232,24,12,0.5); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all 0.14s ease; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.2rem 3rem;
+  background:rgba(8,8,8,0.95);
+  border-bottom:1px solid var(--black4);
+  backdrop-filter:blur(12px);
+}
+.nav-logo {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:22px; letter-spacing:4px;
+  color:var(--white);
+}
+.nav-logo span { color:var(--red); }
+.nav-links { display:flex; gap:2.5rem; }
+.nav-links a {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:13px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--grey); text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-links a:hover { color:var(--red); }
+.nav-badge {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:2px; color:var(--red);
+  border:1px solid var(--redborder);
+  padding:0.35rem 1rem;
+  background:var(--redfade);
+}
+
+/* HERO */
+.hero {
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  position:relative;
+  z-index:2;
+  overflow:hidden;
+}
+/* diagonal split */
+.hero::after {
+  content:'';
+  position:absolute;
+  top:0; bottom:0;
+  left:50%;
+  width:2px;
+  background:linear-gradient(180deg, transparent, var(--red), transparent);
+  transform:skewX(-4deg) translateX(-50%);
+  z-index:3;
+}
+.hero-left {
+  padding:10rem 3rem 5rem 3rem;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative;
+}
+.hero-eyebrow {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:5px; text-transform:uppercase;
+  color:var(--red); margin-bottom:1.5rem;
+  display:flex; align-items:center; gap:0.75rem;
+}
+.hero-eyebrow::before { content:''; width:24px; height:2px; background:var(--red); }
+.hero-name {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(64px,9vw,110px);
+  line-height:0.92;
+  letter-spacing:2px;
+  margin-bottom:1.5rem;
+}
+.hero-name .slash { color:var(--red); font-size:0.7em; }
+.hero-tagline {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:18px; font-weight:300;
+  letter-spacing:4px; text-transform:uppercase;
+  color:var(--grey); margin-bottom:2.5rem;
+  line-height:1.6;
+}
+.hero-tagline strong { color:var(--white); font-weight:700; }
+.hero-since {
+  display:inline-flex; align-items:center; gap:1rem;
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:13px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--grey2);
+  border-top:1px solid var(--black4);
+  padding-top:1.5rem;
+  margin-top:0.5rem;
+}
+.hero-since span { color:var(--red); font-size:18px; font-weight:700; }
+
+.hero-right {
+  background:var(--black2);
+  border-left:1px solid var(--black4);
+  display:flex; flex-direction:column;
+  justify-content:center;
+  padding:10rem 3rem 5rem;
+  gap:1px;
+  position:relative;
+}
+.hero-right::before {
+  content:'THE NUMBERS';
+  position:absolute; top:8rem; left:3rem;
+  font-family:'Bebas Neue', sans-serif;
+  font-size:11px; letter-spacing:6px;
+  color:var(--grey2);
+}
+
+.big-stat {
+  display:flex;
+  align-items:baseline;
+  gap:0.5rem;
+  padding:1.25rem 0;
+  border-bottom:1px solid var(--black4);
+  position:relative;
+  overflow:hidden;
+}
+.big-stat::before {
+  content:'';
+  position:absolute; left:0; top:0; bottom:0;
+  width:3px; background:var(--red);
+  transform:scaleY(0);
+  transform-origin:bottom;
+  transition:transform 0.4s ease;
+}
+.big-stat:hover::before { transform:scaleY(1); }
+.big-stat:last-child { border-bottom:none; }
+.stat-num-big {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(48px,6vw,72px);
+  color:var(--white);
+  line-height:1;
+  text-shadow: 0 0 40px rgba(232,24,12,0.2);
+}
+.stat-unit {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:18px; font-weight:600;
+  color:var(--red); letter-spacing:2px;
+}
+.stat-arrow {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:14px; color:var(--grey2);
+  letter-spacing:1px; flex:1; text-align:right;
+}
+.stat-label-big {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:4px; text-transform:uppercase;
+  color:var(--grey2);
+  min-width:120px;
+  padding-top:0.5rem;
+}
+
+/* TRANSFORMATION */
+.transform-section {
+  padding:6rem 3rem;
+  position:relative; z-index:2;
+  background:var(--black2);
+  border-top:1px solid var(--black4);
+}
+.sec-header {
+  display:flex; align-items:flex-end;
+  justify-content:space-between;
+  margin-bottom:4rem;
+  border-bottom:1px solid var(--black4);
+  padding-bottom:2rem;
+}
+.sec-title {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(42px,6vw,72px);
+  line-height:0.9;
+  letter-spacing:2px;
+}
+.sec-title span { color:var(--red); }
+.sec-num {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:100px; font-weight:900;
+  color:var(--black4); line-height:1;
+  letter-spacing:-4px;
+  user-select:none;
+}
+
+.transform-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1px;
+  background:var(--black4);
+}
+.transform-card {
+  background:var(--black);
+  padding:2.5rem 2rem;
+  position:relative;
+  overflow:hidden;
+  transition:background 0.3s;
+}
+.transform-card:hover { background:var(--black3); }
+.transform-card::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0;
+  height:2px; background:var(--red);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 0.5s ease;
+}
+.transform-card:hover::after { transform:scaleX(1); }
+.tc-label {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:10px; font-weight:700;
+  letter-spacing:5px; text-transform:uppercase;
+  color:var(--grey2); margin-bottom:1rem;
+}
+.tc-before-after {
+  display:flex; align-items:center;
+  gap:1rem; margin-bottom:1rem;
+}
+.tc-val {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:52px; line-height:1;
+  color:var(--grey2);
+}
+.tc-val.now { color:var(--white); font-size:64px; }
+.tc-arrow { color:var(--red); font-size:24px; font-weight:900; }
+.tc-unit {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:16px; color:var(--red);
+  letter-spacing:2px; font-weight:600;
+}
+.tc-gain {
+  display:inline-block;
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:12px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--red);
+  background:var(--redfade);
+  border:1px solid var(--redborder);
+  padding:0.3rem 0.75rem;
+}
+.tc-duration {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:11px; color:var(--grey2);
+  letter-spacing:2px; margin-top:0.75rem;
+}
+
+/* LIFTS */
+.lifts-section {
+  padding:6rem 3rem;
+  position:relative; z-index:2;
+}
+.lifts-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:2px;
+  background:var(--black4);
+  margin-top:1px;
+}
+.lift-card {
+  background:var(--black);
+  padding:3rem 2rem;
+  position:relative;
+  overflow:hidden;
+  border-top:3px solid transparent;
+  transition:all 0.3s;
+}
+.lift-card:hover { background:var(--black3); border-top-color:var(--red); }
+.lift-name {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:32px; letter-spacing:3px;
+  color:var(--grey); margin-bottom:0.5rem;
+  transition:color 0.3s;
+}
+.lift-card:hover .lift-name { color:var(--white); }
+.lift-pr {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(60px,7vw,90px);
+  line-height:0.9;
+  color:var(--white);
+  text-shadow:var(--glow);
+  margin-bottom:0.25rem;
+}
+.lift-unit {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:22px; font-weight:700;
+  color:var(--red); letter-spacing:3px;
+}
+.lift-note {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:12px; color:var(--grey2);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-top:1rem; padding-top:1rem;
+  border-top:1px solid var(--black4);
+}
+/* bar behind the number */
+.lift-bg-text {
+  position:absolute;
+  right:-10px; top:50%;
+  transform:translateY(-50%);
+  font-family:'Bebas Neue', sans-serif;
+  font-size:120px; color:var(--redfade);
+  line-height:1;
+  pointer-events:none;
+  user-select:none;
+  letter-spacing:-4px;
+}
+
+/* SPLIT SCHEDULE */
+.split-section {
+  padding:6rem 3rem;
+  background:var(--black2);
+  border-top:1px solid var(--black4);
+  position:relative; z-index:2;
+}
+.split-container {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  margin-top:0;
+}
+.split-phase {
+  position:relative;
+}
+.phase-label {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:5px; text-transform:uppercase;
+  color:var(--red); margin-bottom:1rem;
+  display:flex; align-items:center; gap:0.75rem;
+}
+.phase-label::after { content:''; flex:1; height:1px; background:var(--redborder); }
+.phase-title {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:36px; letter-spacing:2px;
+  color:var(--white); margin-bottom:2rem;
+}
+.day-rows { display:flex; flex-direction:column; gap:2px; }
+.day-row {
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:0;
+  background:var(--black4);
+  overflow:hidden;
+  transition:all 0.2s;
+}
+.day-row:hover { background:var(--black3); }
+.day-label {
+  background:var(--black3);
+  padding:0.9rem 1rem;
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:12px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--red);
+  display:flex; align-items:center;
+  border-right:1px solid var(--black4);
+}
+.day-label.rest { color:var(--grey2); }
+.day-muscles {
+  padding:0.9rem 1.25rem;
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:14px; font-weight:600;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--white);
+  display:flex; align-items:center;
+  flex-wrap:wrap; gap:0.4rem;
+}
+.muscle-tag {
+  background:var(--redfade);
+  border:1px solid var(--redborder);
+  padding:0.15rem 0.6rem;
+  font-size:11px; color:var(--red);
+  border-radius:1px;
+}
+.muscle-tag.secondary {
+  background:transparent; border-color:var(--black4);
+  color:var(--grey);
+}
+
+/* TIMELINE */
+.timeline-section {
+  padding:6rem 3rem;
+  position:relative; z-index:2;
+}
+.timeline-track {
+  position:relative;
+  margin-top:3rem;
+  padding-left:2rem;
+}
+.timeline-track::before {
+  content:'';
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:2px;
+  background:linear-gradient(180deg, var(--red), var(--red2), transparent);
+}
+.tl-node {
+  position:relative;
+  padding:0 0 3rem 3rem;
+}
+.tl-node::before {
+  content:'';
+  position:absolute;
+  left:-7px; top:6px;
+  width:14px; height:14px;
+  background:var(--black);
+  border:2px solid var(--grey2);
+  border-radius:50%;
+  transition:all 0.3s;
+}
+.tl-node.milestone::before {
+  background:var(--red);
+  border-color:var(--red);
+  box-shadow:var(--glow-sm);
+  width:18px; height:18px;
+  left:-9px;
+}
+.tl-date {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:4px; text-transform:uppercase;
+  color:var(--red); margin-bottom:0.4rem;
+}
+.tl-event {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:24px; letter-spacing:2px;
+  color:var(--white); margin-bottom:0.3rem;
+}
+.tl-detail {
+  font-family:'Barlow', sans-serif;
+  font-size:14px; color:var(--grey);
+  line-height:1.6; font-weight:300;
+  max-width:500px;
+}
+
+/* MINDSET */
+.mindset-section {
+  padding:5rem 3rem;
+  background:var(--black2);
+  border-top:1px solid var(--black4);
+  position:relative; z-index:2;
+  text-align:center;
+}
+.big-quote {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(36px,6vw,80px);
+  line-height:0.95;
+  letter-spacing:3px;
+  max-width:900px; margin:0 auto;
+  position:relative;
+}
+.big-quote .red { color:var(--red); }
+.big-quote::before {
+  content:'"';
+  position:absolute;
+  top:-40px; left:-20px;
+  font-size:200px; color:var(--black4);
+  font-family:'Bebas Neue', sans-serif;
+  line-height:1;
+  z-index:-1;
+}
+.quote-attr {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:12px; letter-spacing:4px;
+  color:var(--grey2); margin-top:2rem;
+  text-transform:uppercase;
+}
+
+/* CONTACT */
+.contact-section {
+  padding:6rem 3rem;
+  position:relative; z-index:2;
+}
+.contact-inner {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  background:var(--black4);
+}
+.contact-left {
+  background:var(--red);
+  padding:4rem;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.contact-left-title {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(36px,5vw,64px);
+  color:var(--black);
+  line-height:0.95; letter-spacing:2px;
+  margin-bottom:1rem;
+}
+.contact-left-sub {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:14px; font-weight:600;
+  letter-spacing:2px; text-transform:uppercase;
+  color:rgba(0,0,0,0.6);
+  line-height:1.7;
+}
+.contact-right {
+  background:var(--black3);
+  padding:4rem;
+  display:flex; flex-direction:column;
+  justify-content:center; gap:1rem;
+}
+.contact-link {
+  display:flex; align-items:center; gap:1.5rem;
+  padding:1.25rem 1.5rem;
+  background:var(--black4);
+  text-decoration:none;
+  transition:all 0.2s;
+  border-left:3px solid transparent;
+}
+.contact-link:hover { border-left-color:var(--red); background:var(--black); }
+.contact-link-icon {
+  font-size:20px; width:28px; text-align:center;
+}
+.contact-link-text {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:14px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--white);
+}
+.contact-link-sub {
+  font-family:'Barlow', sans-serif;
+  font-size:12px; color:var(--grey);
+  margin-left:auto; letter-spacing:1px;
+}
+
+/* FOOTER */
+footer {
+  background:var(--black);
+  border-top:1px solid var(--black4);
+  padding:1.5rem 3rem;
+  display:flex; justify-content:space-between; align-items:center;
+  position:relative; z-index:2;
+}
+.footer-logo {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:18px; letter-spacing:4px; color:var(--grey2);
+}
+.footer-logo span { color:var(--red); }
+.footer-right {
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:11px; letter-spacing:3px;
+  color:var(--grey2); text-transform:uppercase;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+.fade-up { animation:fadeUp 0.8s ease forwards; }
+.d1{animation-delay:0.1s;opacity:0;}
+.d2{animation-delay:0.2s;opacity:0;}
+.d3{animation-delay:0.3s;opacity:0;}
+.d4{animation-delay:0.5s;opacity:0;}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; }
+  .hero-right { border-left:none; border-top:1px solid var(--black4); padding:3rem 1.5rem; }
+  .hero-left { padding:8rem 1.5rem 3rem; }
+  .hero::after { display:none; }
+  .transform-grid, .lifts-grid { grid-template-columns:1fr; }
+  .split-container { grid-template-columns:1fr; }
+  .contact-inner { grid-template-columns:1fr; }
+  section, .transform-section, .lifts-section, .split-section, .timeline-section, .mindset-section, .contact-section { padding:3rem 1.5rem; }
+  body { cursor:auto; }
+  .cur, .cur-trail { display:none; }
+  footer { flex-direction:column; gap:0.5rem; }
+  .sec-num { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-trail" id="curTrail"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">RV<span>.</span>IRON</div>
+  <div class="nav-links">
+    <a href="#transform">Transformation</a>
+    <a href="#lifts">PRs</a>
+    <a href="#split">Training</a>
+    <a href="#journey">Journey</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-badge">ACTIVE · OCT 2024</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow fade-up">Iron Journey · Delhi, India</div>
+    <h1 class="hero-name fade-up d1">
+      RAHUL<br>
+      <span class="slash">/</span>VERMA
+    </h1>
+    <p class="hero-tagline fade-up d2">
+      <strong>52 kg → 65 kg.</strong><br>
+      Not a transformation.<br>A reconstruction.
+    </p>
+    <div class="hero-since fade-up d3">
+      Lifting since &nbsp;<span>OCT 2024</span>&nbsp; — &nbsp; 20 months in
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="big-stat fade-up d1">
+      <div>
+        <div class="stat-label-big">Bench Press</div>
+        <div style="display:flex;align-items:baseline;gap:0.5rem;">
+          <span class="stat-num-big">80</span>
+          <span class="stat-unit">KG</span>
+          <span style="font-family:'Barlow Condensed';font-size:14px;color:var(--grey2);margin-left:0.5rem;">+ 30KG DB</span>
+        </div>
+      </div>
+    </div>
+    <div class="big-stat fade-up d2">
+      <div>
+        <div class="stat-label-big">Squat</div>
+        <div style="display:flex;align-items:baseline;gap:0.5rem;">
+          <span class="stat-num-big">100</span>
+          <span class="stat-unit">KG</span>
+        </div>
+      </div>
+    </div>
+    <div class="big-stat fade-up d3">
+      <div>
+        <div class="stat-label-big">Deadlift</div>
+        <div style="display:flex;align-items:baseline;gap:0.5rem;">
+          <span class="stat-num-big">160</span>
+          <span class="stat-unit">KG</span>
+        </div>
+      </div>
+    </div>
+    <div class="big-stat fade-up d4">
+      <div>
+        <div class="stat-label-big">Body Weight</div>
+        <div style="display:flex;align-items:baseline;gap:0.5rem;">
+          <span class="stat-num-big">65</span>
+          <span class="stat-unit">KG</span>
+          <span style="font-family:'Barlow Condensed';font-size:14px;color:var(--red);margin-left:0.5rem;">▲ +13KG</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORMATION -->
+<section class="transform-section" id="transform">
+  <div class="sec-header">
+    <div class="sec-title">THE <span>NUMBERS</span><br>DON'T LIE</div>
+    <div class="sec-num">01</div>
+  </div>
+  <div class="transform-grid">
+    <div class="transform-card">
+      <div class="tc-label">Body Weight</div>
+      <div class="tc-before-after">
+        <div>
+          <div class="tc-val">52</div>
+          <div class="tc-unit">KG</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div>
+          <div class="tc-val now">65</div>
+          <div class="tc-unit">KG</div>
+        </div>
+      </div>
+      <div class="tc-gain">+13 KG GAINED</div>
+      <div class="tc-duration">Oct 2024 → Jun 2026 · 20 months</div>
+    </div>
+    <div class="transform-card">
+      <div class="tc-label">Bench Press (Barbell)</div>
+      <div class="tc-before-after">
+        <div>
+          <div class="tc-val">20</div>
+          <div class="tc-unit">KG</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div>
+          <div class="tc-val now">80</div>
+          <div class="tc-unit">KG</div>
+        </div>
+      </div>
+      <div class="tc-gain">+60 KG PROGRESS</div>
+      <div class="tc-duration">Empty bar → 80kg · Dumbbell: 30kg each</div>
+    </div>
+    <div class="transform-card">
+      <div class="tc-label">Big Three Total</div>
+      <div class="tc-before-after">
+        <div>
+          <div class="tc-val" style="font-size:36px;padding-top:0.5rem;">—</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div>
+          <div class="tc-val now" style="font-size:52px;">340</div>
+          <div class="tc-unit">KG</div>
+        </div>
+      </div>
+      <div class="tc-gain">BENCH + SQUAT + DEADLIFT</div>
+      <div class="tc-duration">80 + 100 + 160 = 340kg combined</div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFTS -->
+<section class="lifts-section" id="lifts">
+  <div class="sec-header">
+    <div class="sec-title">PERSONAL <span>RECORDS</span></div>
+    <div class="sec-num">02</div>
+  </div>
+  <div class="lifts-grid">
+    <div class="lift-card">
+      <div class="lift-bg-text">80</div>
+      <div class="lift-name">Bench Press</div>
+      <div class="lift-pr">80</div>
+      <div class="lift-unit">KG · BARBELL</div>
+      <div class="lift-note">Dumbbell: 30 KG / EACH · Flat bench · Chest dominant</div>
+    </div>
+    <div class="lift-card">
+      <div class="lift-bg-text">100</div>
+      <div class="lift-name">Squat</div>
+      <div class="lift-pr">100</div>
+      <div class="lift-unit">KG</div>
+      <div class="lift-note">Back squat · Quad + glute drive</div>
+    </div>
+    <div class="lift-card">
+      <div class="lift-bg-text">160</div>
+      <div class="lift-name">Deadlift</div>
+      <div class="lift-pr">160</div>
+      <div class="lift-unit">KG</div>
+      <div class="lift-note">Conventional · 2.46× bodyweight</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT -->
+<section class="split-section" id="split">
+  <div class="sec-header">
+    <div class="sec-title">TRAINING <span>SPLITS</span></div>
+    <div class="sec-num">03</div>
+  </div>
+  <div class="split-container">
+    <!-- SINGLE MUSCLE (started here) -->
+    <div class="split-phase">
+      <div class="phase-label">Phase 01 · Where it started</div>
+      <div class="phase-title">SINGLE MUSCLE SPLIT</div>
+      <div class="day-rows">
+        <div class="day-row">
+          <div class="day-label">MON</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Chest</span>
+            <span class="muscle-tag secondary">Full focus</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">TUE</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Back</span>
+            <span class="muscle-tag secondary">Full focus</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">WED</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Shoulder</span>
+            <span class="muscle-tag secondary">Full focus</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">THU</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Arms</span>
+            <span class="muscle-tag secondary">Bi + Tri</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">FRI</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Abs</span>
+            <span class="muscle-tag secondary">Core focus</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">SAT</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Legs</span>
+            <span class="muscle-tag secondary">Full focus</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label rest">SUN</div>
+          <div class="day-muscles" style="color:var(--grey2);font-size:13px;letter-spacing:3px;">REST / RECOVERY</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOUBLE MUSCLE (current) -->
+    <div class="split-phase">
+      <div class="phase-label">Phase 02 · Current Program ● Live</div>
+      <div class="phase-title">DOUBLE MUSCLE SPLIT</div>
+      <div class="day-rows">
+        <div class="day-row">
+          <div class="day-label">MON</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Chest</span>
+            <span class="muscle-tag secondary">+</span>
+            <span class="muscle-tag">Triceps</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">TUE</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Back</span>
+            <span class="muscle-tag secondary">+</span>
+            <span class="muscle-tag">Biceps</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">WED</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Shoulder</span>
+            <span class="muscle-tag secondary">+</span>
+            <span class="muscle-tag">Legs (Quads)</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">THU</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Arms</span>
+            <span class="muscle-tag secondary">Full focus</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">FRI</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Chest</span>
+            <span class="muscle-tag secondary">+</span>
+            <span class="muscle-tag">Shoulder</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">SAT</div>
+          <div class="day-muscles">
+            <span class="muscle-tag">Back</span>
+            <span class="muscle-tag secondary">+</span>
+            <span class="muscle-tag">Legs (Ham + Calves)</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label rest">SUN</div>
+          <div class="day-muscles" style="color:var(--grey2);font-size:13px;letter-spacing:3px;">REST / RECOVERY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section" id="journey">
+  <div class="sec-header">
+    <div class="sec-title">THE <span>JOURNEY</span></div>
+    <div class="sec-num">04</div>
+  </div>
+  <div class="timeline-track">
+    <div class="tl-node milestone">
+      <div class="tl-date">October 2024</div>
+      <div class="tl-event">DAY ONE — 52 KG</div>
+      <div class="tl-detail">Walked into the gym at 52 kg. Started with the empty bar. No experience, no base — just the decision to show up.</div>
+    </div>
+    <div class="tl-node">
+      <div class="tl-date">Late 2024</div>
+      <div class="tl-event">BUILDING THE BASE</div>
+      <div class="tl-detail">Learned the fundamental movement patterns — bench, squat, deadlift, overhead press. Focused on form over weight.</div>
+    </div>
+    <div class="tl-node milestone">
+      <div class="tl-date">Early 2025</div>
+      <div class="tl-event">SINGLE MUSCLE SPLIT BEGINS</div>
+      <div class="tl-detail">Started training with a structured 6-day single muscle split — one muscle group per day, full focus and volume per session. The foundation of real progress.</div>
+    </div>
+    <div class="tl-node">
+      <div class="tl-date">Mid 2025</div>
+      <div class="tl-event">FIRST MAJOR PRs HIT</div>
+      <div class="tl-detail">Bench started climbing past 60kg. Body weight crossed 60 kg for the first time. Deadlift surpassed 120 kg.</div>
+    </div>
+    <div class="tl-node milestone">
+      <div class="tl-date">2026 — Recent Switch</div>
+      <div class="tl-event">UPGRADED TO DOUBLE MUSCLE SPLIT</div>
+      <div class="tl-detail">After mastering single-muscle training, switched to a higher-frequency double muscle split — hitting each muscle group twice a week for accelerated growth and more training variety.</div>
+    </div>
+    <div class="tl-node milestone">
+      <div class="tl-date">June 2026 — Now</div>
+      <div class="tl-event">340 KG TOTAL · 65 KG · DOUBLE SPLIT</div>
+      <div class="tl-detail">80kg bench · 100kg squat · 160kg deadlift. 13 kg added to the frame. Running the double muscle split. 20 months in — this is just the beginning.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MINDSET -->
+<section class="mindset-section">
+  <div class="big-quote">
+    THE BAR <span class="red">DOESN'T CARE</span><br>
+    HOW YOU FEEL.<br>LIFT IT ANYWAY.
+  </div>
+  <div class="quote-attr">— Rahul Verma · 20 months of iron</div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="contact-left-title">TRAIN.<br>CONNECT.<br>GROW.</div>
+      <div class="contact-left-sub">Open to training partners,<br>gym buddies & conversations<br>about fitness & discipline.</div>
+    </div>
+    <div class="contact-right">
+      <a class="contact-link" href="https://linkedin.com" target="_blank">
+        <span class="contact-link-icon">◈</span>
+        <span class="contact-link-text">LinkedIn</span>
+        <span class="contact-link-sub">Connect</span>
+      </a>
+     <a class="contact-link" href="https://instagram.com/rahul.ve18" target="_blank">
+    <span class="contact-link-icon">📷</span>
+    <span class="contact-link-text">Instagram</span>
+    <span class="contact-link-sub">@rahul.ve18</span>
+      </a>
+      <a class="contact-link" href="mailto:rahul7004835@gmail.com">
+        <span class="contact-link-icon">◈</span>
+        <span class="contact-link-text">Email Me</span>
+        <span class="contact-link-sub">rahul7004835@gmail.com</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">RV<span>.</span>IRON</div>
+  <div class="footer-right">Rahul Verma · Delhi · Iron since Oct 2024</div>
+</footer>
+
+<script>
+// Cursor
+const cur = document.getElementById('cur');
+const trail = document.getElementById('curTrail');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function anim(){
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  tx+=(mx-tx)*0.13; ty+=(my-ty)*0.13;
+  trail.style.left=tx+'px'; trail.style.top=ty+'px';
+  requestAnimationFrame(anim);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ trail.style.width='52px'; trail.style.height='52px'; trail.style.borderColor='rgba(232,24,12,0.8)'; });
+  el.addEventListener('mouseleave',()=>{ trail.style.width='36px'; trail.style.height='36px'; trail.style.borderColor='rgba(232,24,12,0.5)'; });
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+      e.target.style.transition='opacity 0.7s ease, transform 0.7s ease';
+    }
+  });
+},{threshold:0.08});
+document.querySelectorAll('.transform-card,.lift-card,.day-row,.tl-node,.big-stat').forEach((el,i)=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px)';
+  el.style.transitionDelay=(i*0.05)+'s';
+  obs.observe(el);
+});
+
+// Lift number count-up
+function countUp(el, target, duration=1500){
+  let start=0, step=target/duration*16;
+  const timer=setInterval(()=>{
+    start=Math.min(start+step, target);
+    el.textContent=Math.floor(start);
+    if(start>=target) clearInterval(timer);
+  },16);
+}
+const liftObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const num = parseInt(e.target.dataset.target);
+      countUp(e.target, num);
+      liftObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.lift-pr').forEach(el=>{
+  el.dataset.target=el.textContent.trim();
+  el.textContent='0';
+  liftObs.observe(el);
+});
+</script>
+</body>
+</html>
